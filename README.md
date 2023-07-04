@@ -16,6 +16,9 @@
 </tbody>
 </table>
 
+**AppVeyor**
+
+[![Build status](https://ci.appveyor.com/api/projects/status/fbhj17ctkw65xp4q?svg=true)](https://ci.appveyor.com/project/Kanger79/hw-8-4-selenide)
 
 
 ***
