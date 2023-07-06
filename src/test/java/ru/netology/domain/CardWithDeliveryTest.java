@@ -21,15 +21,22 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class CardWithDeliveryTest {
+    private WebDriver driver;
 
     double random = Math.random() * 28; //генерация случайного числа от 0 до 27,9999
     int rnd = (int) random + 3;  //выделение целого числа из случайного и смещение диаппазона на 3 (от 3 до 30)
 
     @BeforeEach
-    void setUp() {
+        void setUp() {
+        driver = new ChromeDriver();
         open("http://localhost:9999");
     }
 
+    @AfterEach
+    void tearDown() {
+        driver.quit();
+        driver = null;
+    }
 
     private String genDate(int addDays, String pattern) {
         return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
