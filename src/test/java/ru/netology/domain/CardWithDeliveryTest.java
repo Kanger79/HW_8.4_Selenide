@@ -1,6 +1,7 @@
 package ru.netology.domain;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -194,7 +195,7 @@ public class CardWithDeliveryTest {
         String currentDate = genDate(3, "dd.MM.yyyy");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").sendKeys(currentDate);
-        $("[data-test-id='name'] input").setValue("Смирнов Николай");
+        $("[data-test-id='name'] input").setValue("Паровозов Аркадий");
         $("[data-test-id='phone'] input").setValue(("+78002008002"));
         $("[data-test-id='agreement']").click();
         $("button.button").click();
@@ -204,6 +205,21 @@ public class CardWithDeliveryTest {
 
     }
 
+    @Test
+    public void shouldValidTestChangeDate() {       //задание №2 - выбор даты из списка
+        $("[data-test-id='city'] input").setValue("Кр");
+        $$(".menu-item__control").findBy(text("Краснодар")).click();
+        String currentDate = genDate(7, "dd.MM.yyyy");
+        actions().moveToElement($("[data-test-id='date'] input")).perform();
+        $("[data-test-id='date'] input").sendKeys(Keys.DOWN, Keys.DOWN, Keys.LEFT, Keys.LEFT, Keys.LEFT);
+        $("[data-test-id='name'] input").setValue("Петров Владимир");
+        $("[data-test-id='phone'] input").setValue(("+78002008002"));
+        $("[data-test-id='agreement']").click();
+        $("button.button").click();
 
+        $(".notification__content").shouldBe(visible, Duration.ofSeconds(15));
+        $(".notification__content").shouldHave(Condition.exactText("Встреча успешно забронирована на " + currentDate));
+
+    }
 
 }
