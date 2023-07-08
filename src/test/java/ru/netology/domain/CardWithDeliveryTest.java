@@ -189,12 +189,12 @@ public class CardWithDeliveryTest {
     }
 
     @Test
-    public void shouldValidTestChangeCity() {       //задание №2 - выбор города из списка
+    public void shouldValidTestFindInMassive() {       //задание №2 - поиск в массиве
         $("[data-test-id='city'] input").setValue("Кр");
         $$(".menu-item__control").findBy(text("Краснодар")).click();
-        String currentDate = genDate(3, "dd.MM.yyyy");
+        String currentDate = genDate(8, "dd.MM.yyyy");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").sendKeys(currentDate);
+        $$(".calendar__day").findBy(text("16")).click();
         $("[data-test-id='name'] input").setValue("Паровозов Аркадий");
         $("[data-test-id='phone'] input").setValue(("+78002008002"));
         $("[data-test-id='agreement']").click();
@@ -206,9 +206,10 @@ public class CardWithDeliveryTest {
     }
 
     @Test
-    public void shouldValidTestChangeDate() {       //задание №2 - выбор даты из списка
+    public void shouldValidTestMovingArrows() {       //задание №2 - выбор стрелками
         $("[data-test-id='city'] input").setValue("Кр");
-        $$(".menu-item__control").findBy(text("Краснодар")).click();
+        actions().moveToElement($("[data-test-id='city'] input")).perform();
+        $("[data-test-id='city'] input").sendKeys(Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.ENTER);
         String currentDate = genDate(7, "dd.MM.yyyy");
         actions().moveToElement($("[data-test-id='date'] input")).perform();
         $("[data-test-id='date'] input").sendKeys(Keys.DOWN, Keys.DOWN, Keys.LEFT, Keys.LEFT, Keys.LEFT);
